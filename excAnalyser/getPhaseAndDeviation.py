@@ -2,7 +2,7 @@ def phaseDifference(ref,curr):
     sum=0
     diff={}
     for i in ref.angles.keys():
-        x=ref.angles[i]-curr.angles[i]
+        x=ref.angles[i].angle-curr.angles[i].angle
         diff[i]=x
         sum+=abs(x)
     return (sum,diff)
