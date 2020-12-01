@@ -44,22 +44,28 @@ def countRepetition(previous_pose, current_pose, previous_state, flag):
         # if an overall average increase in value is detected set the current_state's bit to 1, if it decrease set it to 0
         # if it is between tolerance*3 and -tolerance*3, do nothing (then current_state will contain same value as previous)
         if(sdx > (tolerance*3)):
-            current_state[0] = 1
+            current_state[0]=1
         elif(sdx < (tolerance*-3)):
-            current_state[0] = 0
+            current_state[0]=0
         if(sdy > (tolerance*3)):
-            current_state[1] = 1
+            current_state[1]=1
         elif(sdy < (tolerance*-3)):
-            current_state[1] = 0
+            current_state[1]=0
         if(current_state != previous_state):
             flag = (flag + 1)%2
         return string, current_pose, current_state.copy(), flag
 
+def squatCounter(current_pose, flag):
+    if current_pose[0][10][0]==0 and current_pose[0][10][1] == 0:
+        return 'Cannot detect any joint in the frame'
+    # else:
+        
+
 def main():
     with tf.Session() as sess:
         # Load the models
-        model_cfg, model_outputs = posenet.load_model(args.model, sess)
-        output_stride = model_cfg['output_stride']
+        model_cfg, model_outputs=posenet.load_model(args.model, sess)
+        output_stride=model_cfg['output_stride']
 
         if args.file is not None: # Frame source, speicifed file or the specified(or default) live cam
             cap = cv2.VideoCapture(args.file)

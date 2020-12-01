@@ -1,5 +1,5 @@
-tensorflow-gpu
+tensorflow==1.15.0
 scipy
 pyyaml
-opencv-python==3.4
+opencv-python
 
