@@ -1,5 +1,4 @@
 from pose.poseClass import pose
-from pose.single import singlePoint
 from pose import helpers
 
 class squats(pose):

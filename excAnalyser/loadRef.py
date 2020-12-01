@@ -1,4 +1,4 @@
-import pose
+from pose.getAppropriateObject import getObject
 import shelve
 
 def loadReference(excercise:str):
@@ -8,8 +8,7 @@ def loadReference(excercise:str):
 
     phases=[]
     for i in frames:
-        if excercise=='squats':s=pose.squats.squats(i,0.20)
-        elif excercise=='lunges':s=pose.lunges.lunges(i,0.20)
+        s=getObject(excercise,i)
         phases.append(s)
     return phases
 
