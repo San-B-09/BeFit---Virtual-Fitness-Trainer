@@ -42,9 +42,7 @@ def getRefs(excercise:str,conf):
     lst=[m for m in lst if "frame" in m]
     lst.sort()
     refs=[]
-    if len(lst)!=0:
-        for j in lst:
-            de=getDet(refFolder+"\\"+j)
-            de=getObject(excercise,de,conf)
-            refs.append(deepcopy(de))
+    for j in lst:
+        de=getDet(refFolder+"\\"+j)
+        refs.append(deepcopy(getObject(excercise,de,conf)))
     return refs
