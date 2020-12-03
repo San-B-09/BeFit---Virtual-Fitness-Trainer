@@ -45,13 +45,6 @@ def getRefs(excercise:str,conf):
     if len(lst)!=0:
         for j in lst:
             de=getDet(refFolder+"\\"+j)
-            # print(*de[0])
             de=getObject(excercise,de,conf)
             refs.append(deepcopy(de))
-            # print(refs[-1].reduced['nose'].x,refs[-1].reduced['nose'].y)
-            # print(refs[0].reduced['nose'].x,refs[0].reduced['nose'].y)
-    # for i in range(len(refs)):
-    #     for j in refs[i].angles.keys():
-    #         print(j,refs[i].angles[j].angle)
-    print("Reference preperation completed \n\n")
     return refs
