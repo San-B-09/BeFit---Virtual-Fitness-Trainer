@@ -13,7 +13,6 @@ class pose:
                 coordinates[i][2]
                 )
 
-
     def __init__(self,coordinates,conf):
         self.createCoords(coordinates,conf)
         self.conf=conf

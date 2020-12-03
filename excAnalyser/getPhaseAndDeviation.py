@@ -1,10 +1,12 @@
 def phaseDifference(ref,curr):
-    sum=0
+    sum=0.0
     diff={}
     for i in ref.angles.keys():
         x=ref.angles[i].angle-curr.angles[i].angle
+        print(i,ref.angles[i].angle,curr.angles[i].angle)
         diff[i]=x
         sum+=abs(x)
+    print("-"*60)
     return (sum,diff)
 
 def getPhase(current,phases):
@@ -13,5 +15,9 @@ def getPhase(current,phases):
     diff=None
     for i in range(len(phases)):
         x,d=phaseDifference(phases[i],current)
-        if x<mn: mn=x; ind=i; diff=d
+        # print(x,d)
+        if x<mn:
+            mn=x
+            ind=i
+            diff=d
     return (ind,diff)

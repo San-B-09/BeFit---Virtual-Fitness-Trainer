@@ -35,7 +35,7 @@ def getDet(file_name,model_name=101,scale_factor=1):
         lst.append([keypoint_coords[0][i][0],keypoint_coords[0][i][1],keypoint_scores[0][i]])
     return lst
 
-def getFastDet(cap,scale_factor,output_stride,sess,model_outputs):
+def getFastDet(cap,scale_factor,output_stride,sess,model_outputs,conf):
     input_image, display_image, output_scale = posenet.read_cap(
             cap, scale_factor=scale_factor, output_stride=output_stride)
 
@@ -55,7 +55,7 @@ def getFastDet(cap,scale_factor,output_stride,sess,model_outputs):
 
     image = posenet.draw_skel_and_kp(
             display_image, pose_scores, keypoint_scores, keypoint_coords,
-            min_pose_score=0.2, min_part_score=0.2)
+            min_pose_score=0, min_part_score=conf)
     lst=[]
     for i in range(keypoint_coords.shape[1]):
         lst.append([keypoint_coords[0][i][0],keypoint_coords[0][i][1],keypoint_scores[0][i]])
