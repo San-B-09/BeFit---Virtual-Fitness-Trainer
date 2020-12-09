@@ -11,6 +11,7 @@ from excAnalyser.loadRef import loadReference
 from excAnalyser.countReps import countReps
 
 cam_id = 0
+cam_id="demo\\squats_test.mp4"
 cam_width = 1080
 cam_height = 720
 scale_factor = 0.7125
@@ -32,7 +33,10 @@ with tf.Session() as sess:
     cap.set(4, cam_height)
 
     while True:
-        lst, image = getFastDet(cap, scale_factor, output_stride, sess, model_outputs,conf)
+        try:
+            lst, image = getFastDet(cap, scale_factor, output_stride, sess, model_outputs,conf)
+        except:
+            break
 
         s = getObject(excercise, lst, conf)
 
