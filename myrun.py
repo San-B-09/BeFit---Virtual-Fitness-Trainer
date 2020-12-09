@@ -8,6 +8,7 @@ from pose.getAppropriateObject import getObject
 from prepReference import getRefs
 from excAnalyser.getPhaseAndDeviation import getPhase
 from excAnalyser.loadRef import loadReference
+from excAnalyser.countReps import countReps
 
 cam_id = 0
 cam_width = 1080
@@ -15,7 +16,8 @@ cam_height = 720
 scale_factor = 0.7125
 model_name = 101
 conf=0.1
-
+phase_list=[]
+count=0
 with tf.Session() as sess:
 
     model_cfg, model_outputs  =  posenet.load_model(model_name,sess)
@@ -45,16 +47,21 @@ with tf.Session() as sess:
         if s.isOkay:
             image  =  cv2.putText(image, "READY", (10, y+20), cv2.FONT_HERSHEY_SIMPLEX, .5, (0, 255, 0), 2)
         else:
-            image  =  cv2.putText(image, "NOT READY", (10, y+20), cv2.FONT_HERSHEY_SIMPLEX, .5, (0, 0, 255), 2)
+            image  =  cv2.putText(image, "NOT READY", (10, y+20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
 
         image  =  cv2.putText(image, "Total phases "+str(len(phases)), (10, y+40), cv2.FONT_HERSHEY_SIMPLEX, .5, (255, 0, 0), 1)
 
         if s.isOkay:
             curr_phase,diff=getPhase(s,phases)
-            image  =  cv2.putText(image, str(curr_phase), (10, y+60), cv2.FONT_HERSHEY_SIMPLEX, .5, (80, 4, 235), 10)
-            # for j in s.angles.keys():
-            #     print(j,s.angles[j].angle)
-            # print("="*50)
+            image  =  cv2.putText(image, str(curr_phase), (10, y+60), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (80, 4, 235), 3)
+            phase_list.append(curr_phase)
+            temp=countReps(phase_list,len(phases))
+            # print(temp)
+            if len(temp)<len(phase_list):
+                count+=1
+            phase_list=temp
+        image  =  cv2.putText(image, str(count), (10, y+120), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 235), 4)
+
         cv2.imshow('RepCounter', image)
         ch  =  cv2.waitKey(1)
         if(ch == ord('q') or ch == ord('Q')):break
