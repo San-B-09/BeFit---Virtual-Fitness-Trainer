@@ -14,10 +14,8 @@ class GenRep:
         ind=arr.index(max(arr))
         return representatives[ind]
 
-
     def divider(self,data:list, phases:list):
         div_data=[[] for i in range(len(phases))]
-
         prev_curr_phase=data[0].curr_phase
         start_temp=0
         counter=0
@@ -35,9 +33,10 @@ class GenRep:
         div_data=[self.getMaxDevPose([self.representative(j) for j in i]) for i in div_data]
         return div_data
 
+    # def generate_report(self, div_data, phases):
+
+
     def __init__(self,data:list, phases:list):
-        self.phases=phases
         div_data=self.divider(data,phases)
         div_data=self.reducer(div_data)
-        for i in div_data:
-            print(i.curr_phase,i.diff)
+        self.report=generate_report(div_data,phases)

@@ -1,6 +1,13 @@
 from pose.single import singlePoint
 from pose.single import singleAngle
 
+def getListPoints(d:dict):
+    lst=[]
+    for i in d.keys():
+        lst.extend(list(i))
+    lst=set(lst)
+    return list(lst)
+
 def takeBetter(x:singlePoint,y:singlePoint):
     if x.conf>y.conf:
         return x

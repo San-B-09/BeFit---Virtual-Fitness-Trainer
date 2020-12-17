@@ -1,4 +1,5 @@
 from pose.single import singlePoint
+from pose import helpers
 
 class pose:
     keyValues=['nose','left_eye','right_eye','left_ear','right_ear','left_shoulder',
@@ -13,12 +14,18 @@ class pose:
                 coordinates[i][2]
                 )
 
+    def addMoreInfo(self,image,diff,curr_phase,count):
+        self.image=image
+        self.diff=diff
+        self.curr_phase=curr_phase
+        self.count=count
+
+    def loadInfo(self):
+        self.reduced=dict.fromkeys(helpers.getListPoints(self.angles),None)
+        self.reduced=helpers.prepReduced(self.reduced,self.points)
+        self.angles=helpers.prepAngles(self.angles,self.reduced)
+        self.isOkay=helpers.checkOkay(self.reduced,self.conf)
+
     def __init__(self,coordinates,conf):
         self.createCoords(coordinates,conf)
         self.conf=conf
-    
-
-# coords=[[0,0,100] for i in range(17)]
-# p1=pose(coords,50)
-# for i in p1.coordinates.keys():
-#     print(i,p1.coordinates[i].x)
