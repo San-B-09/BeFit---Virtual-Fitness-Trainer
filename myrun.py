@@ -14,8 +14,9 @@ from writeOnImage import write
 
 
 cam_id = 0
-cam_id="demo\\squats_test.mp4"
-cam_id="demo\\mydemo.mp4"
+cam_id="demo\\bicep_press.mp4"
+# cam_id="demo\\bicep_press.mp4"
+# cam_id=r"demo\push_up.mp4"
 cam_width = 360
 cam_height = 280
 scale_factor = 0.5
@@ -49,7 +50,7 @@ with tf.Session() as sess:
     while True:
         if check_read==0:
             try:
-                lst, image = getFastDet(cap, scale_factor, output_stride, sess, model_outputs,conf)
+                lst, image, inp_img = getFastDet(cap, scale_factor, output_stride, sess, model_outputs,conf)
             except:
                 break
             check_read+=4
@@ -65,13 +66,18 @@ with tf.Session() as sess:
 
         if s.isOkay:
             curr_phase,diff=getPhase(s,phases)
+            print(diff)
             phase_list.append(curr_phase)
-            temp=countReps(phase_list,len(phases))
-            if len(temp)<len(phase_list):
-                count+=1
-            phase_list=temp
-            s.addMoreInfo(image,diff,curr_phase,count)
-            data.append(s)
+            if phase_list[0]!=0:
+                s.isOkay=False
+                phase_list=[]
+            else:
+                temp=countReps(phase_list,len(phases))
+                if len(temp)<len(phase_list):
+                    count+=1
+                phase_list=temp
+                s.addMoreInfo(inp_img,diff,curr_phase,count)
+                data.append(s)
 
 
         image=write(image,s,curr_phase,count,len(phases))
@@ -82,7 +88,7 @@ with tf.Session() as sess:
         if(ch == ord('q') or ch == ord('Q')):break
         if(ch == ord('r') or ch == ord('R')):count=0
 
-    rep=GenRep(data,phases)
-
     cap.release()
     cv2.destroyAllWindows()
+
+    rep=GenRep(data,phases)

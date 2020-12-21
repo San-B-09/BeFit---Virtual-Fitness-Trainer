@@ -16,11 +16,13 @@ numLevel=2
 
 total_time=0
 start=None
+exec_data=[[]]
 while True:
 
     input_image,display_image,output_scale = posenet.read_cap(
         cap,scale_factor=1,output_stride=output_stride)
     
+    eachstart=time.time()
     if count%gap==0:
         if start!=None:
             fps="FPS:{:.3f}".format(gap/(time.time()-start))
@@ -43,10 +45,8 @@ while True:
     except:
         continue
 
-    # total_time+=(time.time()-start)
+    exec_data[-1].append(time.time()-eachstart)
 
-    # print("Execution time:",time.time()-start)
-    # print(image.shape)
     image[10:150,10:230]=[0,0,0]
     font=cv2.FONT_HERSHEY_SIMPLEX
 
@@ -72,13 +72,22 @@ while True:
 
     ch  =  cv2.waitKey(1)
 
-    if(ch == ord('q') or ch == ord('Q')):break
-    elif ch==ord('w') or ch == ord('W'):gap+=1
-    elif ch==ord('s') or ch == ord('S'):gap=max(1,gap-1)
-    elif ch==ord('a') or ch == ord('A'):win_s=max(5,win_s-5)
-    elif ch==ord('d') or ch == ord('D'):win_s+=5
-    elif ch==ord('X') or ch == ord('x'):numLevel+=1
-    elif ch==ord('Z') or ch == ord('z'):numLevel=max(1,numLevel-1)
+    if(ch == ord('q') or ch == ord('Q')):
+        break
+    elif ch==ord('w') or ch == ord('W'):
+        gap+=1
+        exec_data.append([])
+    elif ch==ord('s') or ch == ord('S'):
+        gap=max(1,gap-1)
+        exec_data.append([])
+    elif ch==ord('a') or ch == ord('A'):
+        win_s=max(5,win_s-5)
+    elif ch==ord('d') or ch == ord('D'):
+        win_s+=5
+    elif ch==ord('X') or ch == ord('x'):
+        numLevel+=1
+    elif ch==ord('Z') or ch == ord('z'):
+        numLevel=max(1,numLevel-1)
 
 cap.release()
 cv2.destroyAllWindows()

@@ -1,5 +1,6 @@
 from pose.single import singlePoint
 from pose.single import singleAngle
+from copy import deepcopy
 
 def getListPoints(d:dict):
     lst=[]
@@ -29,7 +30,7 @@ def prepAngles(angles,reduced):
     for i in angles.keys():
         # print("adkjfb")
         # print(reduced[i[0]])
-        angles[i]=singleAngle(reduced[i[0]],reduced[i[1]],reduced[i[2]])
+        angles[i]=deepcopy(singleAngle(reduced[i[0]],reduced[i[1]],reduced[i[2]]))
     return angles
 
 def checkOkay(reduced,conf):

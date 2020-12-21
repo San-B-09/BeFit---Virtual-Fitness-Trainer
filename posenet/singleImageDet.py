@@ -59,4 +59,4 @@ def getFastDet(cap,scale_factor,output_stride,sess,model_outputs,conf):
     lst=[]
     for i in range(keypoint_coords.shape[1]):
         lst.append([keypoint_coords[0][i][0],keypoint_coords[0][i][1],keypoint_scores[0][i]])
-    return lst,image
+    return lst,image,display_image

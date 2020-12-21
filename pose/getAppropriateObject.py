@@ -10,4 +10,8 @@ def getObject(excercise: str, de, conf):
         s = dumbbell_upper_head(de, conf)
     elif excercise == 'push_up':
         s = push_up(de, conf)
+    elif excercise == 'sit_up':
+        s = sit_up(de, conf)
+    elif excercise == 'bicep_press':
+        s = bicep_press(de, conf)
     return s
