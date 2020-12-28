@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "C:\\Users\\himan\\anaconda3\\envs\\BeFit\\python.exe",
-    "python.linting.pylintArgs": [
-        "--generate-members"
-    ],
-    "jupyter.jupyterServerType": "local"
-}
