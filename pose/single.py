@@ -6,6 +6,7 @@ class singlePoint:
         
 import numpy as np
 class singleAngle:
+    okay=True
     def __init__(self,first:singlePoint,sec:singlePoint,third:singlePoint):
         a = np.array([first.x,first.y])
         b = np.array([sec.x,sec.y])
@@ -19,3 +20,10 @@ class singleAngle:
 
         self.angle=np.degrees(angle)
         self.conf=min([first.conf,sec.conf,third.conf])
+    
+    def compareAngle(self, ref, tolerance):
+        if abs(self.angle-ref.angle)/ref.angle < tolerance:
+            self.okay=True
+        else:
+            self.okay=False
+        self.tolerance=tolerance

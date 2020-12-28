@@ -10,18 +10,22 @@ sess,model_cfg,model_outputs,output_stride=poseEst.load_model()
 cap = cv2.VideoCapture(0)
 
 count=0
-gap=2
+gap=1
 win_s=10
 numLevel=2
 
 total_time=0
 start=None
 exec_data=[[]]
+Allstart=time.time()
 while True:
 
     input_image,display_image,output_scale = posenet.read_cap(
         cap,scale_factor=1,output_stride=output_stride)
-    
+    # print(Allstart)
+    # print(Allstart-time.time())
+    if time.time()-Allstart>gap*10:
+        gap+=1
     eachstart=time.time()
     if count%gap==0:
         if start!=None:
@@ -74,6 +78,9 @@ while True:
 
     if(ch == ord('q') or ch == ord('Q')):
         break
+    if(ch == ord('r') or ch == ord('R')):
+        gap=1
+        Allstart=time.time()
     elif ch==ord('w') or ch == ord('W'):
         gap+=1
         exec_data.append([])

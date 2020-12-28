@@ -11,11 +11,13 @@ from excAnalyser.getPhaseAndDeviation import getPhase
 from excAnalyser.countReps import countReps
 from excAnalyser.genReport import GenRep
 from writeOnImage import write
+from copy import deepcopy
 
 
 cam_id = 0
 cam_id="demo\\bicep_press.mp4"
-# cam_id="demo\\bicep_press.mp4"
+cam_id=r"demo\dumbbell_lateral_raises.mp4"
+cam_id="demo\\my_squat.mp4"
 # cam_id=r"demo\push_up.mp4"
 cam_width = 360
 cam_height = 280
@@ -24,6 +26,7 @@ model_name = 101
 conf=0.1
 phase_list=[]
 count=0
+tolerance=0.2
 
 def getExcerciseName():
     temp_cnt=1
@@ -43,8 +46,7 @@ with tf.Session() as sess:
 
     data=[]
     cap  =  cv2.VideoCapture(cam_id)
-    # cap.set(3,cam_width)
-    # cap.set(4,cam_height)
+
     check_read=0
     curr_phase=-1
     while True:
@@ -53,7 +55,7 @@ with tf.Session() as sess:
                 lst, image, inp_img = getFastDet(cap, scale_factor, output_stride, sess, model_outputs,conf)
             except:
                 break
-            check_read+=4
+            check_read+=3
         else:
             try:
                 posenet.read_cap(cap, scale_factor=scale_factor, output_stride=output_stride)
@@ -66,7 +68,6 @@ with tf.Session() as sess:
 
         if s.isOkay:
             curr_phase,diff=getPhase(s,phases)
-            print(diff)
             phase_list.append(curr_phase)
             if phase_list[0]!=0:
                 s.isOkay=False
@@ -77,8 +78,8 @@ with tf.Session() as sess:
                     count+=1
                 phase_list=temp
                 s.addMoreInfo(inp_img,diff,curr_phase,count)
-                data.append(s)
-
+                s.updateAngleStatus(phases,tolerance)
+                data.append(deepcopy(s))
 
         image=write(image,s,curr_phase,count,len(phases))
 

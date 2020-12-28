@@ -20,6 +20,11 @@ class pose:
         self.curr_phase=curr_phase
         self.count=count
 
+    def updateAngleStatus(self,phases,tolerance):
+        curr_ref_phase=phases[self.curr_phase]
+        for i in self.angles.keys():
+            self.angles[i].compareAngle(curr_ref_phase.angles[i],tolerance)
+
     def loadInfo(self):
         self.reduced=dict.fromkeys(helpers.getListPoints(self.angles),None)
         self.reduced=helpers.prepReduced(self.reduced,self.points)

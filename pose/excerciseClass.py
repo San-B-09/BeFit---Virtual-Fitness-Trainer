@@ -5,7 +5,7 @@ class dumbbell_lateral_raises(pose):
     angles={
         ('left_hip','left_shoulder','left_elbow'):None,
         ('right_hip','right_shoulder','right_elbow'):None,
-        ('right_shoulder','right_elbow','left_wrist'):None,
+        ('left_shoulder','left_elbow','left_wrist'):None,
         ('right_shoulder','right_elbow','right_wrist'):None
     }
     def __init__(self,coordinates,conf):

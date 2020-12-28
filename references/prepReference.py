@@ -2,6 +2,7 @@ import os
 from posenet.singleImageDet import getDet
 from pose.getAppropriateObject import getObject
 from copy import deepcopy
+import cv2
 
 def getRefs(excercise:str,conf):
     refFolder=".\\references\\"+excercise
@@ -13,7 +14,7 @@ def getRefs(excercise:str,conf):
     for j in lst:
         de,image=getDet(refFolder+"\\"+j)
         obj=deepcopy(getObject(excercise,de,conf))
-        obj.addMoreInfo(image,None,cnt,None)
+        obj.addMoreInfo(cv2.imread(refFolder+"\\"+j),None,cnt,None)
         refs.append(obj)
         cnt+=1
     return refs
