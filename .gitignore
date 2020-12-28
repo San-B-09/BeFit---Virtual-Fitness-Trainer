@@ -2,10 +2,9 @@ images/*
 output/*
 .idea/*
 .idea
-_models/*
 .vscode/*
 .gitignore
-luc.ipynb
+*.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
